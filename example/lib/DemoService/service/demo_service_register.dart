@@ -8,5 +8,4 @@
       DemoService.regsiter();
       DemoServiceMessageToFlutter.regsiter();
    }
- 
  }

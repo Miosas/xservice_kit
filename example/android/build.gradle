@@ -1,18 +1,19 @@
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()  // 替换 jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        // 更新到与Gradle 7.5兼容的版本
+        classpath 'com.android.tools.build:gradle:7.4.2'
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()  // 替换 jcenter()
     }
 }
 
@@ -24,6 +25,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

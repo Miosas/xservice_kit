@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "xservice_kit",
+    "type": "har",
+    "deviceTypes": [
+      "default",
+      "tablet"
+    ]
+  }
+}

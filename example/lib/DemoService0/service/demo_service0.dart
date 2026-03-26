@@ -13,7 +13,7 @@ class DemoService0 {
 		ServiceGateway.sharedInstance().registerService(_service);
 	}
 
-  static Future<bool> MessageToNative(String message,[onInvocationException onException]) {
+  static Future<bool> MessageToNative(String message,[onInvocationException? onException]) {
 		 Map<String,dynamic> properties = new Map<String,dynamic>();
 		 properties["message"]= message;
 		 return _service.invokeMethod('MessageToNative',properties,onException).then<bool>((value){

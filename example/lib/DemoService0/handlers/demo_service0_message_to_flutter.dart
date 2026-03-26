@@ -28,6 +28,6 @@ class DemoService0MessageToFlutter extends ServiceCallHandler {
 //==============================================Do not edit code above!
   Future<Map> onCall(String message) async{
     //TODO:Add you handler code here.
-    return null;
+    return {};
   }
 }

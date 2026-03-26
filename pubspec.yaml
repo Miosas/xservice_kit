@@ -1,24 +1,37 @@
 name: xservice_kit
 description: A plutter plugin helps native flutter messaging.
-version: 0.0.29
+version: 0.1.0
 author: Jidong Chen
 homepage: https://github.com/alibaba-flutter
 
 dependencies:
   flutter:
     sdk: flutter
+  plugin_platform_interface:
 
 environment:
-  sdk: '>=2.0.0-dev.49.0 <3.0.0'
+  sdk: '>=2.19.0'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
 # The following section is specific to Flutter.
+
+#flutter:
+#  plugin:
+#    androidPackage: fleamarket.taobao.com.xservicekit
+#    pluginClass: XserviceKitPlugin
+
 flutter:
   plugin:
-    androidPackage: fleamarket.taobao.com.xservicekit
-    pluginClass: XserviceKitPlugin
+    platforms:
+      android:
+        package: fleamarket.taobao.com.xservicekit
+        pluginClass: XserviceKitPlugin
+      ohos:
+        pluginClass: XserviceKitPlugin
+      ios:
+        pluginClass: XserviceKitPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

@@ -3,31 +3,39 @@ group 'com.taobao.idlefish.xservice_kit'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()  // 替换 jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:7.4.2'  // 从3.0.1升级
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()  // 替换 jcenter()
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 33  // 从26升级到33
+    // buildToolsVersion 不再需要指定
+
     defaultConfig {
-        minSdkVersion 16
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion 16  // 这个可以保持16，因为是library
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"  // 更新到AndroidX
     }
+
     lintOptions {
         disable 'InvalidPackage'
+    }
+
+    // 添加Java版本配置
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }

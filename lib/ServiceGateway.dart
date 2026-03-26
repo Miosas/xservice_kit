@@ -17,7 +17,7 @@ class ServiceGateway{
     _services[service.serviceName()] = service;
   }
   void registerHandler(ServiceCallHandler handler){
-    ServiceTemplate service = _services[handler.service()];
+    ServiceTemplate? service = _services[handler.service()];
     if(service != null){
       service.regiserHandler(handler);
     }

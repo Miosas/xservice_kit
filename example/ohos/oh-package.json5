@@ -1,0 +1,12 @@
+{
+  "modelVersion": "5.0.0",
+  "name": "xservice_kit_example",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {},
+  "devDependencies": {
+  }
+}

@@ -8,9 +8,9 @@ typedef void ServiceEventListnerRemoveCallback();
 typedef dynamic onInvocationException(Exception e);
 
 class ServiceTemplate implements ServiceCallHandler{
-  MethodChannel _channel;
-  EventChannel _eventChannel;
-  String _serviceName = "root";
+  late MethodChannel _channel;
+  late EventChannel _eventChannel;
+  late String _serviceName = "root";
 
   Map<String, ServiceCallHandler> _callHandlers = new Map();
   Map<String, List<ServiceEventListner>> _eventListners = new Map();
@@ -18,7 +18,7 @@ class ServiceTemplate implements ServiceCallHandler{
   Map<int, StreamSubscription<dynamic>> _subscriptions =
       new Map<int, StreamSubscription<dynamic>>();
   int _subscriptionCounter = 0;
-  Stream<dynamic> _stream = null;
+  Stream<dynamic> _stream = Stream.empty();
 
   ServiceTemplate(String serviceName) {
     _serviceName = serviceName;
@@ -28,11 +28,11 @@ class ServiceTemplate implements ServiceCallHandler{
     regiserHandler(this);
 
     _channel.setMethodCallHandler((MethodCall call) {
-      final ServiceCallHandler handler = _callHandlers[call.method];
+      final ServiceCallHandler? handler = _callHandlers[call.method];
       if (handler != null) {
         return handler.onMethodCall(call);
       } else {
-        return null;
+        return Future.value(null);
       }
     });
   }
@@ -41,13 +41,13 @@ class ServiceTemplate implements ServiceCallHandler{
     return _serviceName;
   }
 
-  Future<dynamic> invokeMethod(String method, [dynamic arguments,onInvocationException onException]) async{
+  Future<dynamic> invokeMethod(String method, [dynamic arguments,onInvocationException? onException]) async{
     try{
       dynamic ret = await _channel.invokeMethod(method,arguments);
       return ret;
     }catch(e){
       if(onException != null){
-        return onException(e);
+        return onException(e as Exception);
       }else{
         return null;
       }
@@ -75,7 +75,7 @@ class ServiceTemplate implements ServiceCallHandler{
   @Deprecated('should avoid anonymous event try to use addEventListner instead')
   void cancelEventForSubscription(int subID) {
     try{
-      StreamSubscription<dynamic> sub = _subscriptions[subID];
+      StreamSubscription<dynamic>? sub = _subscriptions[subID];
       if (sub != null) {
         sub.cancel();
         _subscriptions.remove(subID);
@@ -103,22 +103,22 @@ class ServiceTemplate implements ServiceCallHandler{
       return (){};
     }
 
-    List<ServiceEventListner> list = _eventListners[event];
+    List<ServiceEventListner>? list = _eventListners[event];
     if(list == null){
-      list = List();
+      list = [];
       _eventListners[event] = list;
     }
 
     list.add(listner);
 
     return (){
-      list.remove(listner);
+      list?.remove(listner);
     };
   }
 
   bool _onEvent(String event , Map<dynamic,dynamic> params){
     if(event == null) return false;
-    List<ServiceEventListner> list = _eventListners[event];
+    List<ServiceEventListner>? list = _eventListners[event];
     if(list != null){
       for(ServiceEventListner l in list){
         l(event,params);
